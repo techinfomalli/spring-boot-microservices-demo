@@ -1,0 +1,39 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: employee-service-route
+          uri: lb://employee-service
+          predicates:
+            - Path=/employee/**
+          filters:
+            - StripPrefix=1
+
+        - id: department-service-route
+          uri: lb://department-service
+          predicates:
+            - Path=/department/**
+          filters:
+            - StripPrefix=1
+
+eureka:
+  instance:
+    prefer-ip-address: false
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoint:
+    gateway:
+      access: read-only
+  endpoints:
+    web:
+      exposure:
+        include: "*"
