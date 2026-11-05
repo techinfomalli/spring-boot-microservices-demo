@@ -1,15 +1,15 @@
-version: '3.8'
-
 services:
 
   service-registry:
-    build: ./service-registry
+    build:
+      context: ./service-registry
     container_name: service-registry
     ports:
       - "8761:8761"
 
   employee-service:
-    build: ./employee-service
+    build:
+      context: ./employee-service
     container_name: employee-service
     depends_on:
       - service-registry
@@ -17,7 +17,8 @@ services:
       - "8081:8081"
 
   department-service:
-    build: ./department-service
+    build:
+      context: ./department-service
     container_name: department-service
     depends_on:
       - service-registry
@@ -25,7 +26,8 @@ services:
       - "8082:8082"
 
   api-gateway:
-    build: ./api-gateway
+    build:
+      context: ./api-gateway
     container_name: api-gateway
     depends_on:
       - service-registry
